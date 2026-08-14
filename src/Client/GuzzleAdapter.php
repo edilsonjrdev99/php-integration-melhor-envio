@@ -17,4 +17,12 @@ class GuzzleAdapter implements HttpClientInterface {
   public function post(string $url, array $options = []): mixed {
     return $this->client->request('POST', $url, $options);
   }
+
+  public function put(string $url, array $options = []): mixed {
+    return $this->client->request('PUT', $url, $options);
+  }
+
+  public function del(string $url, array $options = []): mixed {
+    return $this->client->request('DELETE', $url, $options);
+  }
 }
