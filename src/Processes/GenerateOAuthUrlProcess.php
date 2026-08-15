@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Process;
+namespace App\Processes;
 
 use App\Configurations\MelhorEnvioConfig;
 use App\Contracts\ProcessInterface;

@@ -5,8 +5,8 @@ require './vendor/autoload.php';
 use App\Clients\GuzzleAdapter;
 use App\Clients\HttpClient;
 use App\Configurations\MelhorEnvioConfig;
-use App\Process\GenerateAccessTokenProcess;
-use App\Process\GenerateOAuthUrlProcess;
+use App\Processes\GenerateAccessTokenProcess;
+use App\Processes\GenerateOAuthUrlProcess;
 use Dotenv\Dotenv;
 use GuzzleHttp\Client as GuzzleClient;
 

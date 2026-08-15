@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Process;
+namespace App\Processes;
 
 use App\Clients\HttpClient;
 use App\Configurations\MelhorEnvioConfig;
