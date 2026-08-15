@@ -9,22 +9,37 @@ class MelhorEnvioConfig {
     private string $secret,
     private string $redirectUri,
     private string $state,
-    private bool   $sandbox = true
+    private string $email,
+    private bool   $sandbox = true,
   ) {}  
 
-  /**
-   * Responsável por retornar a url de login do OAuth2
-   */
-  public function getUrlOAuth2(): string {
-    $url = $this->sandbox
-      ? 'https://sandbox.melhorenvio.com.br/oauth/authorize'
-      : 'https://melhorenvio.com.br/oauth/authorize';
+  public function getBaseUrl(): string {
+    return $this->sandbox
+      ? 'https://sandbox.melhorenvio.com.br'
+      : 'https://melhorenvio.com.br';
+  }
 
-    return $url
-      . "?client_id=$this->clientId"
-      . "&redirect_uri=$this->redirectUri"
-      . '&response_type=code'
-      . "&state=$this->state"
-      . '&scope=shipping-calculate';
+  public function getClientId(): string {
+    return $this->clientId;
+  }
+
+  public function getSecret(): string {
+    return $this->secret;
+  }
+
+  public function getRedirectUri(): string {
+    return $this->redirectUri;
+  }
+
+  public function getEmail(): string {
+    return $this->email;
+  }
+
+  public function getState(): string {
+    return $this->state;
+  }
+
+  public function isSandbox(): bool {
+    return $this->sandbox;
   }
 }

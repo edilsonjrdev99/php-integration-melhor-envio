@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Client;
+namespace App\Clients;
 
-use App\Interface\HttpClientInterface;
+use App\Contracts\HttpClientInterface;
 use GuzzleHttp\ClientInterface;
 
 class GuzzleAdapter implements HttpClientInterface {
@@ -22,7 +22,7 @@ class GuzzleAdapter implements HttpClientInterface {
     return $this->client->request('PUT', $url, $options);
   }
 
-  public function del(string $url, array $options = []): mixed {
+  public function delete(string $url, array $options = []): mixed {
     return $this->client->request('DELETE', $url, $options);
   }
 }
