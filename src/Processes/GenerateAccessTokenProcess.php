@@ -5,6 +5,7 @@ namespace App\Processes;
 use App\Clients\HttpClient;
 use App\Configurations\MelhorEnvioConfig;
 use App\Contracts\ProcessInterface;
+use App\Exceptions\HttpClientException;
 
 class GenerateAccessTokenProcess implements ProcessInterface {
   public function __construct(
@@ -29,14 +30,21 @@ class GenerateAccessTokenProcess implements ProcessInterface {
       'redirect_uri'  => $this->config->getRedirectUri(),
       'code'          => $this->code,
     ];
-    
+
     $options = [
       'headers' => $headers,
-      'json' => $body,
+      'json'    => $body,
     ];
 
-    $response = $this->client->post($url, $options);
-
-    return json_decode($response->getBody()->getContents(), true);
+    try {
+      $response = $this->client->post($url, $options);
+      return json_decode($response->getBody()->getContents(), true);
+    } catch(HttpClientException $e) {
+      return [
+        'erro'   => true,
+        'status' => $e->getStatusCode(),
+        'body'   => $e->getBody()
+      ];
+    }
   }
 }
