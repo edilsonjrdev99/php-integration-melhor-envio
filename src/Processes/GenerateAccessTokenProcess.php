@@ -5,6 +5,7 @@ namespace App\Processes;
 use App\Clients\HttpClient;
 use App\Configurations\MelhorEnvioConfig;
 use App\Contracts\ProcessInterface;
+use App\DTOs\GenerateAccessToken\GenerateAccessTokenOutputDTO;
 use App\Exceptions\HttpClientException;
 
 class GenerateAccessTokenProcess implements ProcessInterface {
@@ -14,7 +15,7 @@ class GenerateAccessTokenProcess implements ProcessInterface {
     private string $code
   ) {}
 
-  public function run(): array {
+  public function run(): GenerateAccessTokenOutputDTO {
     $url     = $this->config->getBaseUrl() . '/oauth/token';
     $email   = $this->config->getEmail();
     $headers = [
@@ -38,13 +39,16 @@ class GenerateAccessTokenProcess implements ProcessInterface {
 
     try {
       $response = $this->client->post($url, $options);
-      return json_decode($response->getBody()->getContents(), true);
+      $data     = json_decode($response->getBody()->getContents(), true);
+
+      return new GenerateAccessTokenOutputDTO(
+        tokenType:    $data['token_type'],
+        accessToken:  $data['access_token'],
+        refreshToken: $data['refresh_token'],
+        expiresIn:    $data['expires_in'],
+      );
     } catch(HttpClientException $e) {
-      return [
-        'erro'   => true,
-        'status' => $e->getStatusCode(),
-        'body'   => $e->getBody()
-      ];
+      return GenerateAccessTokenOutputDTO::fromError($e);
     }
   }
 }
