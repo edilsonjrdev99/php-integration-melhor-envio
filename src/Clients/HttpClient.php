@@ -35,7 +35,7 @@ class HttpClient implements HttpClientInterface {
     return [
       'Accept'       => 'application/json',
       'Content-Type' => 'application/json',
-      'User-Agent'   => "Aplicação " . $this->config->getEmail(),
+      'User-Agent'   => "Aplicação ({$this->config->getEmail()})",
     ];
   }
 }
