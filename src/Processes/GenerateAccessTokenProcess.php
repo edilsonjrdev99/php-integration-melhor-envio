@@ -16,25 +16,16 @@ class GenerateAccessTokenProcess implements ProcessInterface {
   ) {}
 
   public function run(): GenerateAccessTokenOutputDTO {
-    $url     = $this->config->getBaseUrl() . '/oauth/token';
-    $email   = $this->config->getEmail();
-    $headers = [
-      'Accept'       => 'application/json',
-      'Content-Type' => 'application/json',
-      'User-Agent'   => "Aplicação ($email)",
-    ];
-
-    $body = [
-      'grant_type'    => 'authorization_code',
-      'client_id'     => $this->config->getClientId(),
-      'client_secret' => $this->config->getSecret(),
-      'redirect_uri'  => $this->config->getRedirectUri(),
-      'code'          => $this->code,
-    ];
+    $url = $this->config->getBaseUrl() . '/oauth/token';
 
     $options = [
-      'headers' => $headers,
-      'json'    => $body,
+      'json' => [
+        'grant_type'    => 'authorization_code',
+        'client_id'     => $this->config->getClientId(),
+        'client_secret' => $this->config->getSecret(),
+        'redirect_uri'  => $this->config->getRedirectUri(),
+        'code'          => $this->code,
+      ],
     ];
 
     try {

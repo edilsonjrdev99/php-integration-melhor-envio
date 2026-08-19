@@ -2,7 +2,11 @@
 
 require './vendor/autoload.php';
 
+use App\Clients\GuzzleAdapter;
+use App\Clients\HttpClient;
 use App\Configurations\MelhorEnvioConfig;
+
+use GuzzleHttp\Client;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -24,3 +28,7 @@ $melhorEnvioConfig = new MelhorEnvioConfig(
   $email,
   $sandbox
 );
+
+$guzzle        = new Client();
+$guzzleAdapter = new GuzzleAdapter($guzzle);
+$httpClient    = new HttpClient($guzzleAdapter, $melhorEnvioConfig);
