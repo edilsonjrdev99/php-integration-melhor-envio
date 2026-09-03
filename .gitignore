@@ -3,3 +3,7 @@
 
 # Vendor
 /vendor/
+
+# PHPUnit
+.phpunit.result.cache
+resultado.html
